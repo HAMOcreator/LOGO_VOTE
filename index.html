@@ -126,9 +126,13 @@
     <button type="submit">Odeslat hlas</button>
   </form>
 
-  <div class="thank-you" id="thankYou">Hlas dropnutej ✅<br/>Jseš teď v DNA našeho brandu. 🧬</div>
+  <div class="thank-you" id="thankYou">
+    <div id="thankYouLine1"></div>
+    <div id="thankYouLine2"></div>
+  </div>
 
   <script>
+    // Nadpis typewriter
     const txt = "Vyber ho 💥";
     let i = 0;
     function typeWriter() {
@@ -140,6 +144,7 @@
     }
     window.onload = typeWriter;
 
+    // Výběr loga s efektem
     function selectLogo(element, name) {
       document.getElementById("selectedLogo").value = name;
       const logos = document.querySelectorAll(".logo-grid img");
@@ -147,6 +152,7 @@
       element.classList.add("selected");
     }
 
+    // Odeslání a animace děkovačky
     const form = document.getElementById("voteForm");
     const thankYou = document.getElementById("thankYou");
 
@@ -163,10 +169,43 @@
       if (response.ok) {
         form.style.display = "none";
         thankYou.style.display = "block";
+        typeWriterThankYou();
       } else {
         alert("Chyba při odeslání. Zkus to znova.");
       }
     });
+
+    function typeWriterThankYou() {
+      const line1 = "Hlas dropnutej ✅";
+      const line2 = "Jseš teď v DNA našeho brandu. 🧬";
+      let i1 = 0, i2 = 0;
+
+      const l1 = document.getElementById("thankYouLine1");
+      const l2 = document.getElementById("thankYouLine2");
+
+      l1.innerHTML = "";
+      l2.innerHTML = "";
+
+      function type1() {
+        if (i1 < line1.length) {
+          l1.innerHTML += line1.charAt(i1);
+          i1++;
+          setTimeout(type1, 80);
+        } else {
+          setTimeout(type2, 300);
+        }
+      }
+
+      function type2() {
+        if (i2 < line2.length) {
+          l2.innerHTML += line2.charAt(i2);
+          i2++;
+          setTimeout(type2, 80);
+        }
+      }
+
+      type1();
+    }
   </script>
 </body>
 </html>
