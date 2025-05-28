@@ -54,6 +54,21 @@
       transform: scale(1.05);
     }
 
+    .logo-grid img.selected {
+      animation: shakeRotate 0.6s ease;
+      border: 3px solid #0077cc;
+      border-radius: 12px;
+    }
+
+    @keyframes shakeRotate {
+      0% { transform: rotate(0deg) translateX(0); }
+      20% { transform: rotate(10deg) translateX(-4px); }
+      40% { transform: rotate(-10deg) translateX(4px); }
+      60% { transform: rotate(10deg) translateX(-4px); }
+      80% { transform: rotate(-10deg) translateX(4px); }
+      100% { transform: rotate(0deg) translateX(0); }
+    }
+
     .emoji-row {
       font-size: 24px;
       margin: 6px 0;
@@ -96,10 +111,10 @@
   <div id="subheading"></div>
 
   <div class="logo-grid">
-    <img src="logo1.png" onclick="selectLogo('Logo 1')" />
-    <img src="logo2.png" onclick="selectLogo('Logo 2')" />
-    <img src="logo3.png" onclick="selectLogo('Logo 3')" />
-    <img src="logo4.png" onclick="selectLogo('Logo 4')" />
+    <img src="logo1.png" onclick="selectLogo(this, 'Logo 1')" />
+    <img src="logo2.png" onclick="selectLogo(this, 'Logo 2')" />
+    <img src="logo3.png" onclick="selectLogo(this, 'Logo 3')" />
+    <img src="logo4.png" onclick="selectLogo(this, 'Logo 4')" />
   </div>
 
   <div class="emoji-row">🍔 🌭 🍕 🍟 🪩 🍓</div>
@@ -125,8 +140,11 @@
     }
     window.onload = typeWriter;
 
-    function selectLogo(name) {
+    function selectLogo(element, name) {
       document.getElementById("selectedLogo").value = name;
+      const logos = document.querySelectorAll(".logo-grid img");
+      logos.forEach(logo => logo.classList.remove("selected"));
+      element.classList.add("selected");
     }
 
     const form = document.getElementById("voteForm");
