@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hlasuj pro logo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet" />
+  <style>
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: url('ham_transparent.png');
+      background-repeat: repeat;
+      background-size: 80px;
+      opacity: 0.07;
+      z-index: -1;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .form-box {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h1 {
+      font-family: 'Luckiest Guy', cursive;
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    .typewriter {
+      overflow: hidden;
+      border-right: .15em solid orange;
+      white-space: nowrap;
+      margin: 0 auto;
+      letter-spacing: .05em;
+      animation: typing 2.5s steps(40, end), blink-caret .75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: orange }
+    }
+
+    .logos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .logos label {
+      cursor: pointer;
+    }
+
+    .logos input[type="radio"] {
+      display: none;
+    }
+
+    .logos input[type="radio"]:checked + img {
+      border: 3px solid #0077cc;
+      border-radius: 10px;
+    }
+
+    .logos img {
+      width: 100%;
+      max-width: 140px;
+      height: auto;
+      border: 3px solid transparent;
+      border-radius: 10px;
+      transition: transform 0.2s;
+    }
+
+    .logos img:hover {
+      transform: scale(1.05);
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin: 15px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #0077cc;
+      color: white;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+    }
+
+    .success-message {
+      display: none;
+      font-family: 'Luckiest Guy', cursive;
+      font-size: 1.6rem;
+      color: white;
+      text-shadow:
+        -1px -1px 0 #000,
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000;
+      line-height: 1.4;
+      padding: 20px;
+    }
+
+    .success-typewriter {
+      font-family: 'Luckiest Guy', cursive;
+      overflow: hidden;
+      white-space: nowrap;
+      margin: 0 auto;
+      letter-spacing: .05em;
+      border-right: .15em solid orange;
+      animation: typing 2.5s steps(40, end), blink-caret .75s step-end infinite;
+    }
+
+    @media (max-width: 480px) {
+      .logos {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .logos img {
+        max-width: 100px;
+      }
+
+      .success-message {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-box" id="voteForm">
+    <h1>Brand je jen jeden.</h1>
+    <div class="typewriter">Vyber ho. 💥</div>
+    <form id="logoVoteForm" action="https://formspree.io/f/xeogyknb" method="POST">
+      <input type="text" name="Přezdívka" placeholder="Tvoje přezdívka" required />
+      <div class="logos">
+        <label>
+          <input type="radio" name="Logo" value="Logo 1" required />
+          <img src="logo1.png" alt="Logo 1" />
+        </label>
+        <label>
+          <input type="radio" name="Logo" value="Logo 2" />
+          <img src="logo2.png" alt="Logo 2" />
+        </label>
+        <label>
+          <input type="radio" name="Logo" value="Logo 3" />
+          <img src="logo3.png" alt="Logo 3" />
+        </label>
+        <label>
+          <input type="radio" name="Logo" value="Logo 4" />
+          <img src="logo4.png" alt="Logo 4" />
+        </label>
+      </div>
+      <button type="submit">Odeslat hlas</button>
+    </form>
+
+    <div class="success-message" id="successMsg">
+      Hlas dropnutej ✅<br>
+      <span class="success-typewriter">Jseš teď v DNA našeho brandu. 🧬</span>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("logoVoteForm");
+    const success = document.getElementById("successMsg");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: formData,
+          headers: { Accept: "application/json" },
+        });
+
+        if (response.ok) {
+          form.style.display = "none";
+          success.style.display = "block";
+        } else {
+          alert("Chyba při odesílání. Zkuste to prosím znovu.");
+        }
+      } catch (error) {
+        alert("Nepodařilo se spojit se serverem. Zkuste to později.");
+      }
+    });
+  </script>
+</body>
+</html>
