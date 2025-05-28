@@ -8,11 +8,10 @@
   <style>
     body {
       margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background: white;
-      text-align: center;
       padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: white;
+      text-align: center;
     }
 
     h1 {
@@ -32,17 +31,15 @@
       overflow: hidden;
       border-right: 3px solid white;
       width: fit-content;
-      margin: 0 auto 30px;
+      margin: 0 auto 20px;
     }
 
     .logo-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 16px;
-      justify-content: center;
       max-width: 500px;
-      margin: 0 auto 20px;
-      position: relative;
+      margin: 0 auto 10px;
     }
 
     .logo-grid img {
@@ -57,9 +54,9 @@
       transform: scale(1.05);
     }
 
-    .emoji {
+    .emoji-row {
       font-size: 24px;
-      line-height: 1;
+      margin: 6px 0;
       user-select: none;
     }
 
@@ -70,7 +67,8 @@
       max-width: 400px;
       border-radius: 6px;
       border: 1px solid #ccc;
-      margin-bottom: 15px;
+      margin-top: 10px;
+      margin-bottom: 20px;
     }
 
     button {
@@ -99,18 +97,13 @@
 
   <div class="logo-grid">
     <img src="logo1.png" onclick="selectLogo('Logo 1')" />
-    <div class="emoji">🍔</div>
-    <div class="emoji">🍹</div>
     <img src="logo2.png" onclick="selectLogo('Logo 2')" />
-
-    <div class="emoji">🌭</div>
     <img src="logo3.png" onclick="selectLogo('Logo 3')" />
     <img src="logo4.png" onclick="selectLogo('Logo 4')" />
-    <div class="emoji">🍓</div>
-    <div class="emoji">🍰</div>
-    <div class="emoji">🎉</div>
-    <div class="emoji">🪩</div>
   </div>
+
+  <div class="emoji-row">🍔 🌭 🍕 🍟 🪩 🍓</div>
+  <div class="emoji-row">🍹 🍋 🍰 🎧 🎉 🥤</div>
 
   <form id="voteForm">
     <input type="hidden" name="Logo" id="selectedLogo" required />
